@@ -1,13 +1,6 @@
-//Mark Boady - CS502
-//Bubble Sort Experiment
-
-//This function tests bubblesort to see how fast it is in practice.
-
-//Libraries
 import java.util.Random;
 
-class BubbleSort
-{
+public class InsertionSort {
 	//Random Number Generator
 	//A computer cannot get truely random numbers.
 	//It can generate a sequence that looks random.
@@ -81,7 +74,7 @@ class BubbleSort
 			int[] my_random_array = random_array(size);
 			//RUN THE TEST
 			start=System.currentTimeMillis();
-			bubblesort(my_random_array,size);
+			insertionSort(my_random_array,size);
 			end = System.currentTimeMillis();
 			//END OF TEST RUN
 			//How long did it take?
@@ -106,36 +99,22 @@ class BubbleSort
 	}
 
 	//-------------------------------------------------------
-	//-------------------Bubble Sort-------------------------
+	//-------------------Insertion Sort-------------------------
 	//-------------------------------------------------------
 
-	//Bubble Sort
+	//Insertion Sort
 	//This is what we are actually tests
 	//It returns void because it changes the array in place
 	//See lecture for details
-	public static void bubblesort(int[] Array, int size)
+	public static void insertionSort(int[] Array, int size)
 	{
-		boolean swapped=true; //To determine when to stop
-		int i=0; //Loop Counter
-		int temp=0; //Temp for Swapping Values
-		//Start Loop
-		while(swapped)
-		{
-			swapped=false;
-			i=1;
-			while( i < size)
-			{
-				if(Array[i-1] > Array[i])
-				{
-					//Make the Swap
-					temp=Array[i];
-					Array[i]=Array[i-1];
-					Array[i-1]=temp;
-					//Account for Swap
-					swapped=true;
-				}
-				i=i+1;
+		for (int firstUnsortedIndex = 1; firstUnsortedIndex < size; firstUnsortedIndex++){
+			int newElement = Array[firstUnsortedIndex];
+			int i;
+			for (i = firstUnsortedIndex; i > 0 && Array[i - 1] > newElement; i--){
+				Array[i] = Array[i - 1];
 			}
+			Array[i] = newElement;
 		}
 	}
 }

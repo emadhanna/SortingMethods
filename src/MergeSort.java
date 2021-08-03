@@ -1,13 +1,6 @@
-//Mark Boady - CS502
-//Bubble Sort Experiment
-
-//This function tests bubblesort to see how fast it is in practice.
-
-//Libraries
 import java.util.Random;
 
-class BubbleSort
-{
+public class MergeSort {
 	//Random Number Generator
 	//A computer cannot get truely random numbers.
 	//It can generate a sequence that looks random.
@@ -81,7 +74,7 @@ class BubbleSort
 			int[] my_random_array = random_array(size);
 			//RUN THE TEST
 			start=System.currentTimeMillis();
-			bubblesort(my_random_array,size);
+			mergeSort(my_random_array, 0, my_random_array.length);
 			end = System.currentTimeMillis();
 			//END OF TEST RUN
 			//How long did it take?
@@ -106,36 +99,41 @@ class BubbleSort
 	}
 
 	//-------------------------------------------------------
-	//-------------------Bubble Sort-------------------------
+	//-------------------Merge Sort-------------------------
 	//-------------------------------------------------------
 
-	//Bubble Sort
+	//Merge Sort
 	//This is what we are actually tests
 	//It returns void because it changes the array in place
 	//See lecture for details
-	public static void bubblesort(int[] Array, int size)
+	public static void mergeSort(int[] inputArray, int startPosition, int endPosition)
 	{
-		boolean swapped=true; //To determine when to stop
-		int i=0; //Loop Counter
-		int temp=0; //Temp for Swapping Values
-		//Start Loop
-		while(swapped)
-		{
-			swapped=false;
-			i=1;
-			while( i < size)
-			{
-				if(Array[i-1] > Array[i])
-				{
-					//Make the Swap
-					temp=Array[i];
-					Array[i]=Array[i-1];
-					Array[i-1]=temp;
-					//Account for Swap
-					swapped=true;
-				}
-				i=i+1;
-			}
+		if (endPosition - startPosition < 2){
+			return;
 		}
+		
+		int midPosition = (startPosition + endPosition) / 2;
+		mergeSort(inputArray, startPosition, midPosition);
+		mergeSort(inputArray, midPosition + 1, endPosition);
+		merge(inputArray, startPosition, midPosition, endPosition);
+	}
+	
+	public static void merge(int[] inputArray, int startPosition, int midPosition, int endPosition){
+		
+		if(inputArray[midPosition - 1] <= inputArray[midPosition]){
+			return;
+		}
+		
+		int firstElement = startPosition;
+		int middleElement = midPosition;
+		int tempIndex = 0;
+		
+		int[] tempArray = new int[endPosition - startPosition];
+		while(firstElement < midPosition && middleElement < endPosition){
+			tempArray[tempIndex++] = inputArray[firstElement] <= inputArray[middleElement] ? inputArray[firstElement++] : inputArray[middleElement++];
+		}
+		
+		System.arraycopy(inputArray, firstElement, inputArray, startPosition + tempIndex, midPosition - firstElement);
+		System.arraycopy(tempArray, 0, inputArray, startPosition, tempIndex);
 	}
 }
